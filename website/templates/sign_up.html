@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %}
+{% block content %}
+<form action="" method="post" novalidate>
+    <h3 align="center">Регистрация</h3>
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col">
+            {{ form.name(type="text", class="form-control", id="name", placeholder="Имя") }}
+            <div class="row">
+                <div class="col">
+                    {% for error in form.name.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                    </div>
+            </div>
+        </div>
+        <div class="col">
+          {{ form.surname(type="text", class="form-control", id="surname", placeholder="Фамилия") }}
+            <div class="row">
+                <div class="col">
+                    {% for error in form.surname.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                    </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+        {{ form.email(type="text", class="form-control", id="email", placeholder="Email") }}
+        {% for error in form.email.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+    </div>
+    <div class="form-group">
+      <label>Пароль</label>
+      {{ form.password1(type="password", class="form-control", id="password1", placeholder="Пароль") }}
+        {% for error in form.password1.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+    </div>
+    <div class="form-group">
+      <label>Пароль</label>
+      {{ form.password2(type="password", class="form-control", id="password2", placeholder="Пароль") }}
+        {% for error in form.password2.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Дальше</button>
+</form>
+{% endblock %}
