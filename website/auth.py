@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect, flash, url_for
 from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired
+from flask_login import login_user, login_required, current_user, logout_user
 
 from .data.users import User
 from .data import db_session
@@ -32,17 +33,23 @@ def login():
             user = db_sess.query(User).filter(User.email == form.email.data).first()
             if user:
                 if check_password(user.hashed_password, form.password.data):
-                    return redirect('/success')
+                    #запоминаем, что пользователь зарегался
+                    login_user(user, remember=True)
+                    print(current_user)
+                    return redirect('/')
                 else:
                     flash('Неверный пароль', category='error')
             else:
                 flash('Такого пользователя не существует')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, user=current_user)
 
 
+# разлогиниваем пользователя и переносим его в форму входа
 @auth.route('/logout')
+@login_required
 def logout():
-    return '<p>logout</p>'
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 
 def set_password(password):
@@ -80,4 +87,4 @@ def sign_out():
                 db_sess.add(new_user)
                 db_sess.commit()
                 return redirect('/login')
-    return render_template('sign_up.html', form=form)
+    return render_template('sign_up.html', form=form, user=current_user)
