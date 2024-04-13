@@ -8,27 +8,135 @@
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
           crossorigin="anonymous">
     <title>{% block title %}Home{% endblock %}</title>
+    <style>
+      body{
+        background-color: #ba55d3;
+      }
+      .posnav{
+        position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+      }
+      .leftpos{
+        position: relative; right: -100px;
+      }
+      .butpos{
+        position: relative; right: -170px;
+      }
+      .center-screen{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+    .btn {
+    text-decoration: none;
+    padding: 0.15rem 0.9rem;
+    }
+
+
+    </style>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-danger alert-dismissable fade show" role="alert"> {{ message[1] }}</div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-            crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissable fade show" role="alert"> {{ message[1] }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="posnav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand"><img
+                    src='https://touchmehome.ru/catalog/view/theme/technics/images/shopping-bag.svg'
+                    width="40px"></a>
+            <a class="navbar-brand" href="/">Какое-то название | Интернет-магазин</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            КАТАЛОГ
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Компьютеры</a></li>
+                            <li><a class="dropdown-item" href="#">Телефоны</a></li>
+                            <li><a class="dropdown-item" href="#">Аксесуары</a></li>
+                        </ul>
+                    </li>
+                    <div class="leftpos">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">ИСКАТЬ</button>
+                        </form>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <div class="butpos">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                       role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        Привет
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Мой аккаунт</a></li>
+                                        <li><a class="dropdown-item" href="#">Избранное</a></li>
+                                        <br/>
+                                        <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                                    </ul>
+                                </li>
+                                <button type="button" class="btn btn-outline-warning"
+                                        style="position: relative; right: -10px;">
+                                    <a href="/#" class="btn" style="color: orange;">Корзина</a>
+                                </button>
+
+                        </div>
+                        {% else %}
+                        <div class="butpos">
+                            <button type="button" class="btn btn-outline-warning">
+                                <a href="/login" class="btn" style="color: orange;">Войти</a>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary">
+                                <a href="/signup" class="btn" style="color: blue;">Регистрация</a>
+                            </button>
+                        </div>
+                        {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 </html>
