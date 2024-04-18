@@ -1,0 +1,33 @@
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+        <h2 class="text-center"> Добавить товар </h2>
+            {% from "_formhelpers.html" import render_field%}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {{ render_field(form.name, class="form-control", placeholder="Название товара")}}
+                {{ render_field(form.price, class="form-control", placeholder="Цена товара")}}
+                {{ render_field(form.discount, class="form-control", placeholder="скидка")}}
+                {{ render_field(form.stock, class="form-control", placeholder="В наличие")}}
+                {{ render_field(form.description, class="form-control", placeholder="Описание", rows="10")}}
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">{{ render_field(form.image1, class="form-control")}}</div>
+                        <div class="col-md-4">{{ render_field(form.image2, class="form-control")}}</div>
+                        <div class="col-md-4">{{ render_field(form.image3, class="form-control")}}</div>
+                    </div>
+                </div>
+
+            <button type="sumbit" class="btn btn-success">Добавить</button>
+
+            </form>
+        </div>
+    <div class="col-md-2"></div>
+</div>
+</div>
+{% endblock %}
