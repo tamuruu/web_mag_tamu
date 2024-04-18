@@ -10,9 +10,11 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .forms import admin
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(admin, url_prefix='/')
 
     from .data import db_session
 
