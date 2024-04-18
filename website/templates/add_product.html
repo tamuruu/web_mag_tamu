@@ -1,33 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <title>{% block title %}Редактирование{% endblock %}</title>
+    <style>
+        body {
+            background-color: #ba55d3;
+        }
 
+        .posnav {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
 
-{% block content %}
+        .leftpos {
+            position: relative;
+            right: -100px;
+        }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-        <h2 class="text-center"> Добавить товар </h2>
-            {% from "_formhelpers.html" import render_field%}
-            <form action="" method="POST" enctype="multipart/form-data">
-                {{ render_field(form.name, class="form-control", placeholder="Название товара")}}
-                {{ render_field(form.price, class="form-control", placeholder="Цена товара")}}
-                {{ render_field(form.discount, class="form-control", placeholder="скидка")}}
-                {{ render_field(form.stock, class="form-control", placeholder="В наличие")}}
-                {{ render_field(form.description, class="form-control", placeholder="Описание", rows="10")}}
+        .butpos {
+            position: relative;
+            right: -170px;
+        }
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">{{ render_field(form.image1, class="form-control")}}</div>
-                        <div class="col-md-4">{{ render_field(form.image2, class="form-control")}}</div>
-                        <div class="col-md-4">{{ render_field(form.image3, class="form-control")}}</div>
+        .center-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="center-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2 class="text-center"> Добавить товар </h2>
+                {% from "_formhelpers.html" import render_field %}
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {{ render_field(form.name, class="form-control", placeholder="Название товара")}}
+                    {{ render_field(form.price, class="form-control", placeholder="Цена товара")}}
+                    {{ render_field(form.discount, class="form-control", placeholder="скидка")}}
+                    {{ render_field(form.stock, class="form-control", placeholder="В наличие")}}
+                    {{ render_field(form.description, class="form-control", placeholder="Описание", rows="10")}}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">{{ render_field(form.image1, class="form-control")}}</div>
+                            <div class="col-md-4">{{ render_field(form.image2, class="form-control")}}</div>
+                            <div class="col-md-4">{{ render_field(form.image3, class="form-control")}}</div>
+                        </div>
                     </div>
-                </div>
-
-            <button type="sumbit" class="btn btn-success">Добавить</button>
-
-            </form>
+                    <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
         </div>
-    <div class="col-md-2"></div>
+    </div>
 </div>
-</div>
-{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
