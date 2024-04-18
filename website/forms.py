@@ -17,13 +17,12 @@ class AddProducts(Form):
     colors = TextAreaField('Цвета', [validators.DataRequired()])
 
     image1 = FileField('Фото 1', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
-    image2 = FileField('Фото 2', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
-    image3 = FileField('Фото 3', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
+    image2 = FileField('Фото 2', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
+    image3 = FileField('Фото 3', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
 
 
 @admin.route('/addproduct', methods=['POST', 'GET'])
 def add_product():
-    form = AddProducts()
     db_sess = db_session.create_session()
     if request.method == 'POST':
         name = request.form['name']
@@ -44,9 +43,10 @@ def add_product():
             discount=discount,
             stock=stock,
             description=description,
-            image1=picture_files[0] if image1 else 'image.jpg',
-            image2=picture_files[1] if image2 else 'image.jpg',
-            image3=picture_files[2] if image3 else 'image.jpg')
+            image1=picture_files[0] if image1 else 'None',
+            image2=picture_files[1] if image2 else 'None',
+            image3=picture_files[2] if image3 else 'None'
+        )
 
         try:
             db_sess.add(product)
