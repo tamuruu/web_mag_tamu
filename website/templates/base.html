@@ -16,6 +16,7 @@
         position: -webkit-sticky;
   position: sticky;
   top: 0;
+  z-index: 1;
       }
       .leftpos{
         position: relative; right: -100px;
@@ -36,6 +37,81 @@
     text-decoration: none;
     padding: 0.15rem 0.9rem;
     }
+.card {
+  width: 350px;
+  min-height: 350px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Размещаем элементы в колонку */
+  border-radius: 4px;
+  transition: 0.2s;
+  position: relative;
+}
+
+
+
+/* Размещаем скидку на товар относительно изображения */
+.card__label {
+  padding: 4px 8px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #ff6633;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+}
+
+.card__bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
+  padding: 10px;
+}
+
+.card__prices {
+  display: flex;
+  margin-bottom: 10px;
+  flex: 0 0 50%; /* Размещаем цены равномерно в две колонки */
+}
+
+.card__price::after {
+  content: "₽";
+  margin-left: 4px;
+  position: relative;
+}
+
+.card__price--discount {
+  font-weight: 700;
+  font-size: 30px;
+  color: #ff6633;
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.card__price--discount::before {
+  font-weight: 400;
+  font-size: 13px;
+  color: #bfbfbf;
+}
+
+.card__price--common {
+  font-weight: 400;
+  font-size: 17px;
+  color: #606060;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+  text-decoration: line-through;
+}
+
+.card__price--common::before {
+  font-weight: 400;
+  font-size: 13px;
+  color: #bfbfbf;
+}
+
 
 
     </style>
@@ -99,6 +175,9 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <li><a class="dropdown-item" href="#">Мой аккаунт</a></li>
+                                        {% if user.is_admin %}
+                                            <li><a class="dropdown-item" href="/admin">Админка</a></li>
+                                        {% endif %}
                                         <li><a class="dropdown-item" href="#">Избранное</a></li>
                                         <br/>
                                         <li><a class="dropdown-item" href="/logout">Выйти</a></li>

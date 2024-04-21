@@ -6,4 +6,35 @@
         <h2>Десяток товаров по низким ценам Скидки каждый день По промокоду ПАШАМОЛОДЕЦ скидка 50 рублей Бесплатная
             доставка в Диалог </h2></marquee>
 </div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for item in sp %}
+    <div class="col">
+        <div class="card h-100">
+            {%if item[7]%}
+            <img src="static\products_img\{{item[0]}}\{{item[6][0]}}" class="card-img-top" alt="{{item[6][0]}}">
+            {%else%}
+            <img src="{{item[6][0]}}" class="card-img-top" alt="{{item[6][0]}}">
+            {%endif%}
+            <div class="card-body">
+                <div style="color: red;">{{item[3]}}%</div>
+                <h2 class="card-title">{{item[1]}}</h2>
+                <p class="card-text">{{item[5]}}</p>
+            </div>
+            <div class="card__bottom">
+                    <div class="card__prices">
+                      <div class="card__price card__price--discount">{{(item[2] * (100 - item[3])) / 100}}</div>
+                      <div class="card__price card__price--common">{{item[2]}}</div>
+                    </div>
+            </div>
+            <div class="card-footer">
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-primary" type="button">В КОРЗИНУ</button>
+                    <button class="btn btn-primary" type="button">КУПИТЬ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
