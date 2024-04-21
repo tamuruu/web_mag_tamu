@@ -13,6 +13,6 @@ class AddProduct(SqlAlchemyBase):
     description = sqlalchemy.Column(sqlalchemy.Text, nullable=False)
     pub_date = sqlalchemy.Column(sqlalchemy.DateTime, nullable=False, default=datetime.utcnow)
 
-    image1 = sqlalchemy.Column(sqlalchemy.String(150), nullable=False, default='image.jpg')
-    image2 = sqlalchemy.Column(sqlalchemy.String(150), nullable=False, default='image.jpg')
-    image3 = sqlalchemy.Column(sqlalchemy.String(150), nullable=False, default='image.jpg')
+    image1 = sqlalchemy.Column(sqlalchemy.String(150), nullable=True, default='None')
+    image2 = sqlalchemy.Column(sqlalchemy.String(150), nullable=True, default='None')
+    image3 = sqlalchemy.Column(sqlalchemy.String(150), nullable=True, default='None')
