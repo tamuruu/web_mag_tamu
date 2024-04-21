@@ -1,12 +1,14 @@
 from flask import request, redirect, render_template, Blueprint
 from flask_wtf.file import FileAllowed, FileField, FileRequired
-from wtforms import Form, IntegerField, StringField, TextAreaField, validators
 from sqlalchemy import desc
+from wtforms import Form, IntegerField, StringField, TextAreaField, validators
+
 from .data import db_session
 from .data.add_product import AddProduct
 from .utils import save_picture
 
-admin = Blueprint('admin', __name__)
+admin = Blueprint('add_product', __name__)
+
 
 class AddProducts(Form):
     name = StringField('Название', [validators.DataRequired()])
@@ -21,7 +23,7 @@ class AddProducts(Form):
     image3 = FileField('Фото 3', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
 
 
-@admin.route('/addproduct', methods=['POST', 'GET'])
+@admin.route('admin/addproduct/new/', methods=['POST', 'GET'])
 def add_product():
     db_sess = db_session.create_session()
     if request.method == 'POST':
@@ -33,9 +35,11 @@ def add_product():
         image1 = request.files['image1']
         image2 = request.files['image2']
         image3 = request.files['image3']
-        previous_id = db_sess.query(AddProduct).order_by(desc(AddProduct.id)).first().id
+        try:
+            previous_id = db_sess.query(AddProduct).order_by(desc(AddProduct.id)).first().id
+        except Exception:
+            previous_id = 0
         picture_files = save_picture([image1, image2, image3], id=previous_id + 1)
-
 
         product = AddProduct(
             name=name,
@@ -51,10 +55,15 @@ def add_product():
         try:
             db_sess.add(product)
             db_sess.commit()
-            return redirect('/')
+            return redirect('/admin/addproduct/')
         except Exception as e:
             return f'Произошла ошибка: {str(e)}'
 
     else:
         form = AddProducts(request.form)
         return render_template('add_product.html', form=form)
+
+
+@admin.route('admin/any_page_view/')
+def go_back_to_shop():
+    return redirect('/')

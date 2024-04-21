@@ -25,10 +25,9 @@ def save_picture(images, id):
             # сохраняем картинку
             im = Image.open(image)
 
-            # здесь нужно будет обрезать картинку под размер карточки
-            # output size = (500, 500)
-            # im.thumbnail(output_size)
-            
+            output_size = (200, 200)
+            im.thumbnail(output_size)
+
             im.save(picture_path)
             pictures_titles.append(picture_name)
         else:
