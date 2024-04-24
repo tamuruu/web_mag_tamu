@@ -7,6 +7,8 @@ from flask_login import login_user, login_required, current_user, logout_user
 
 from .data.users import User
 from .data import db_session
+from .data.categories import Categories
+
 
 auth = Blueprint('auth', __name__)
 
@@ -28,6 +30,10 @@ class SignUpForm(FlaskForm):
 def login():
     form = LoginForm()
     db_sess = db_session.create_session()
+    catalog = db_sess.query(Categories).all()
+    catalog_list = {}
+    for i in catalog:
+        catalog_list[i.name] = i.address
     if request.method == 'POST':
         if form.validate_on_submit():
             user = db_sess.query(User).filter(User.email == form.email.data).first()
@@ -41,7 +47,7 @@ def login():
                     flash('Неверный пароль', category='error')
             else:
                 flash('Такого пользователя не существует')
-    return render_template('login.html', form=form, user=current_user)
+    return render_template('login.html', form=form, user=current_user, catalog_list=catalog_list)
 
 
 # разлогиниваем пользователя и переносим его в форму входа
@@ -65,6 +71,10 @@ def check_password(hashed_password, password):
 def sign_out():
     form = SignUpForm()
     db_sess = db_session.create_session()
+    catalog = db_sess.query(Categories).all()
+    catalog_list = {}
+    for i in catalog:
+        catalog_list[i.name] = i.address
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     email = request.form.get('email')
@@ -87,4 +97,5 @@ def sign_out():
                 db_sess.add(new_user)
                 db_sess.commit()
                 return redirect('/login')
-    return render_template('sign_up.html', form=form, user=current_user)
+    return render_template('sign_up.html', form=form, user=current_user, catalog_list=catalog_list)
+

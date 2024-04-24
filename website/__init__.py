@@ -4,6 +4,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user, login_required
 
 from .data.users import User
+from .data.categories import Categories
 
 
 class Admin_Go_Back(AdminIndexView):
@@ -17,8 +18,11 @@ class Any_Page_View(BaseView):
     def any_page(self):
         return self.render('main/index.html')
 
-class Controller(ModelView):
+class Show_ID(ModelView):
     column_display_pk = True  # optional, but I like to see the IDs in the list
+
+
+class Controller(Show_ID):
     column_hide_backrefs = False
     column_list = ('id', 'name', 'price', 'stock', 'description')
 
@@ -39,14 +43,20 @@ def create_app():
     from .views import views
     from .auth import auth
     from .forms import admin
+    from .catalog import catalog
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(admin, url_prefix='/')
+    app.register_blueprint(catalog, url_prefix='/')
 
     from .data import db_session
+    from .data.categories import Categories
 
     db_session.global_init("website/db/shop.db")
+
+    db_sess = db_session.create_session()
+
 
     login_manager = LoginManager()
     login_manager.init_app(app)
@@ -54,8 +64,11 @@ def create_app():
     admin_page = Admin(name='Маркет', template_mode='bootstrap4', index_view=Admin_Go_Back())
     admin_page.init_app(app)
     from .data.add_product import AddProduct
+    from .data.categories_products import Categories_Products
     db_sess = db_session.create_session()
     admin_page.add_view(Controller(AddProduct, db_sess))
+    admin_page.add_view(Show_ID(Categories, db_sess))
+    admin_page.add_view(ModelView(Categories_Products, db_sess))
     admin_page.add_view(Any_Page_View(name='В магазин'))
 
     # ищем пользователя
