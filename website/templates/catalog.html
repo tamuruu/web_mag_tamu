@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
 {% block content %}
-<div class="center-screen">
-    <marquee bgcolor="#ffd700"
-             style="color: #fff; font-size: 20px; font-weight: bolder; line-height: 150%; text-shadow: #000000 0px 1px 1px;">
-        <h2>Десяток товаров по низким ценам Скидки каждый день По промокоду ПАШАМОЛОДЕЦ скидка 50 рублей Бесплатная
-            доставка в Диалог </h2></marquee>
-</div>
+</br>
+</br>
+<h1>{{ category_name }}</h1>
+</br>
+</br>
+</br>
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for item in sp %}
     <div class="col">

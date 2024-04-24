@@ -147,9 +147,10 @@
                             КАТАЛОГ
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Компьютеры</a></li>
-                            <li><a class="dropdown-item" href="#">Телефоны</a></li>
-                            <li><a class="dropdown-item" href="#">Аксесуары</a></li>
+                            {%for i in catalog_list%}
+                            <li><a class="dropdown-item" href="catalog/{{catalog_list[i]}}">{{i}}</a></li>
+                            {%endfor%}
+
                         </ul>
                     </li>
                     <div class="leftpos">
