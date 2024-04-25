@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <title>{% block title %}Редактирование{% endblock %}</title>
+    <style>
+        body {
+            background-color: #ba55d3;
+        }
+
+        .posnav {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
+
+        .leftpos {
+            position: relative;
+            right: -100px;
+        }
+
+        .butpos {
+            position: relative;
+            right: -170px;
+        }
+
+        .center-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="center-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2 class="text-center"> Редактирование профиля </h2>
+                {% from "_formhelpers.html" import render_field %}
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    {{ render_field(form.name, class="form-control", placeholder="Имя")}}
+                    {{ render_field(form.surname, class="form-control", placeholder="Фамилия")}}
+                    {{ render_field(form.email, class="form-control", placeholder="Email")}}
+                    {{ render_field(form.photo, class="form-control-file")}}
+                    <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
+                    <a href="/profile" type="submit" class="btn btn-primary mt-3">Отмена</a>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

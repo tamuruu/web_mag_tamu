@@ -29,8 +29,31 @@
             <div class="card-footer">
 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-primary" type="button">Избранное</button>
-                    <button class="btn btn-primary" type="button">В корзину</button>
+                    {% if user.is_authenticated %}
+                    {% if not item[0] in fav_list %}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/fav/add/{{item[0]}}" class="btn">Избранное</a>
+                    </button>
+                    {%else%}
+                    <button class="btn btn-success" type="button">
+                        <a style="color: white;" href="/fav/delete/{{item[0]}}" class="btn">Избранное</a>
+                    </button>
+                    {% endif %}
+                    {%if not item[0] in cart_list%}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/cart/add/{{item[0]}}" class="btn">В корзину</a>
+                    </button>
+                    {%else%}
+                    <h5 class="card-title">Уже в корзине</h5>
+                    {%endif%}
+                    {%else%}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/login" class="btn">Избранное</a>
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/login" class="btn">В корзину</a>
+                    </button>
+                    {%endif%}
                 </div>
             </div>
         </div>

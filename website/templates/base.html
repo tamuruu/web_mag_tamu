@@ -148,7 +148,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             {%for i in catalog_list%}
-                            <li><a class="dropdown-item" href="catalog/{{catalog_list[i]}}">{{i}}</a></li>
+                            <li><a class="dropdown-item" href="/catalog/{{catalog_list[i]}}">{{i}}</a></li>
                             {%endfor%}
 
                         </ul>
@@ -156,7 +156,9 @@
                     <div class="leftpos">
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">ИСКАТЬ</button>
+                            <button class="btn btn-outline-success" type="submit">
+                                <a href="/search" class="btn" style="color: green;">ИСКАТЬ</a>
+                            </button>
                         </form>
                     </div>
                     {% if user.is_authenticated %}
@@ -175,18 +177,18 @@
                                         Привет
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Мой аккаунт</a></li>
+                                        <li><a class="dropdown-item" href="/profile">Мой аккаунт</a></li>
                                         {% if user.is_admin %}
                                             <li><a class="dropdown-item" href="/admin">Админка</a></li>
                                         {% endif %}
-                                        <li><a class="dropdown-item" href="#">Избранное</a></li>
+                                        <li><a class="dropdown-item" href="/favourites">Избранное</a></li>
                                         <br/>
                                         <li><a class="dropdown-item" href="/logout">Выйти</a></li>
                                     </ul>
                                 </li>
                                 <button type="button" class="btn btn-outline-warning"
                                         style="position: relative; right: -10px;">
-                                    <a href="/#" class="btn" style="color: orange;">Корзина</a>
+                                    <a href="/cart" class="btn" style="color: orange;">Корзина</a>
                                 </button>
 
                         </div>
