@@ -44,11 +44,15 @@ def create_app():
     from .auth import auth
     from .forms import admin
     from .catalog import catalog
+    from .cart import cart
+    from .favourites import fav
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(admin, url_prefix='/')
     app.register_blueprint(catalog, url_prefix='/')
+    app.register_blueprint(cart, url_prefix='/')
+    app.register_blueprint(fav, url_prefix='/')
 
     from .data import db_session
     from .data.categories import Categories

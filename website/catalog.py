@@ -1,12 +1,12 @@
-import os
-
-from flask import Blueprint, current_app,render_template, url_for
+from flask import Blueprint, render_template, url_for
 from flask_login import current_user
 
 from .data import db_session
 from .data.add_product import AddProduct
+from .data.cart import Cart
 from .data.categories import Categories
 from .data.categories_products import Categories_Products
+from .data.favourites import Favourites
 
 catalog = Blueprint('catalog', __name__)
 
@@ -18,6 +18,17 @@ def show_catalog(category):
     catalog_list = {}
     for i in catalog:
         catalog_list[i.name] = i.address
+
+    cart = db_sess.query(Cart).filter(Cart.user_id == current_user.id).all()
+    cart_list = []
+    for i in cart:
+        cart_list.append(i.product_id)
+
+    fav = db_sess.query(Favourites).filter(Favourites.user_id == current_user.id).all()
+    fav_list = []
+    for i in fav:
+        fav_list.append(i.product_id)
+
     category = db_sess.query(Categories).filter(Categories.address == category).first()
     id_category = category.id
     category_name = category.name
@@ -32,4 +43,5 @@ def show_catalog(category):
 
         spi.append([product_text.id, product_text.name, product_text.price, product_text.discount, product_text.stock,
                     product_text.description, image_file1, True])
-    return render_template('catalog.html', user=current_user, sp=spi, catalog_list=catalog_list, category_name=category_name)
+    return render_template('catalog.html', user=current_user, sp=spi, catalog_list=catalog_list,
+                           category_name=category_name, cart_list=cart_list, fav_list=fav_list)
