@@ -16,4 +16,6 @@ class User(SqlAlchemyBase, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now)
+    avatar = sqlalchemy.Column(sqlalchemy.String(150), nullable=True, default='None')
+
 
