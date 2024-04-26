@@ -13,17 +13,20 @@ catalog = Blueprint('catalog', __name__)
 
 @catalog.route('catalog/<category>')
 def show_catalog(category):
+    #формирование спосока в каталоге
     db_sess = db_session.create_session()
     catalog = db_sess.query(Categories).all()
     catalog_list = {}
     for i in catalog:
         catalog_list[i.name] = i.address
 
+    # формирование списка продуктов в корзине у данного пользователя
     cart = db_sess.query(Cart).filter(Cart.user_id == current_user.id).all()
     cart_list = []
     for i in cart:
         cart_list.append(i.product_id)
 
+    # формирование списка продуктов в избранном у данного пользователя
     fav = db_sess.query(Favourites).filter(Favourites.user_id == current_user.id).all()
     fav_list = []
     for i in fav:

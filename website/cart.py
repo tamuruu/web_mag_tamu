@@ -40,6 +40,7 @@ def add_product(product_id):
     return redirect(request.referrer)
 
 
+# функция, которая прибавляет еще один товар в корзине
 @login_required
 @cart.route('/cart/plus_one/<int:product_id>')
 def plus_one(product_id):
@@ -49,6 +50,8 @@ def plus_one(product_id):
     db_sess.commit()
     return redirect('/cart')
 
+
+# функция, которая отнимает товар в корзине
 
 @login_required
 @cart.route('/cart/minus_one/<int:product_id>')

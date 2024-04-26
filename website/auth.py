@@ -29,11 +29,14 @@ class SignUpForm(FlaskForm):
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
+    # формирование списка каталога
     db_sess = db_session.create_session()
     catalog = db_sess.query(Categories).all()
     catalog_list = {}
     for i in catalog:
         catalog_list[i.name] = i.address
+
     if request.method == 'POST':
         if form.validate_on_submit():
             user = db_sess.query(User).filter(User.email == form.email.data).first()
@@ -70,11 +73,14 @@ def check_password(hashed_password, password):
 @auth.route('/signup', methods=['GET', 'POST'])
 def sign_out():
     form = SignUpForm()
+
+    # формирование каталога
     db_sess = db_session.create_session()
     catalog = db_sess.query(Categories).all()
     catalog_list = {}
     for i in catalog:
         catalog_list[i.name] = i.address
+
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     email = request.form.get('email')

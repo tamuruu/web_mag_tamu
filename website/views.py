@@ -5,8 +5,6 @@ from flask import Blueprint, render_template, url_for, redirect, request, curren
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, FileField, validators
-from werkzeug.utils import secure_filename
-
 
 from .data import db_session
 from .data.add_product import AddProduct
@@ -14,6 +12,7 @@ from .data.cart import Cart
 from .data.categories import Categories
 from .data.favourites import Favourites
 from .data.users import User
+
 views = Blueprint('views', __name__)
 
 
@@ -24,8 +23,7 @@ class ProfileForm(FlaskForm):
     photo = FileField('Фото профиля')
 
 
-
-
+# домашняя страница
 @views.route('/')
 def home():
     # секции в каталоге
@@ -34,7 +32,6 @@ def home():
     catalog_list = {}
     for i in catalog:
         catalog_list[i.name] = i.address
-
 
     # отображение картинки в карточку
     text = db_sess.query(AddProduct).all()
@@ -62,9 +59,11 @@ def home():
         return render_template('home.html', user=current_user, sp=spi, catalog_list=catalog_list)
 
 
+# функция поиска
 @views.route('/search')
 def search():
     query = request.args.get('query')
+    print(query)
     db_sess = db_session.create_session()
     text = db_sess.query(AddProduct).filter(AddProduct.name.ilike(f'%{query}%')).all()
     spi = []
@@ -83,10 +82,23 @@ def search():
             'description': i.description,
             'images': [f'/static/products_img/{i.id}/{file}' for file in files],
         })
+    try:
+        cart = db_sess.query(Cart).filter(Cart.user_id == current_user.id).all()
+        cart_list = []
+        for i in cart:
+            cart_list.append(i.product_id)
 
-    return render_template('search_results.html', user=current_user, products=spi)
+        fav = db_sess.query(Favourites).filter(Favourites.user_id == current_user.id).all()
+        fav_list = []
+        for i in fav:
+            fav_list.append(i.product_id)
+
+        return render_template('search_results.html', user=current_user, products=spi, cart_list=cart_list, fav_list=fav_list)
+    except Exception:
+        return render_template('search_results.html', user=current_user, products=spi)
 
 
+# просмотр профиля
 @views.route('/profile', methods=['GET', 'POST'])
 @login_required
 def user_profile():
@@ -100,9 +112,10 @@ def user_profile():
     for i in catalog:
         catalog_list[i.name] = i.address
 
-    return render_template('profile.html', form=form, user=current_user, catalog_list=catalog_list, image=filename,)
+    return render_template('profile.html', form=form, user=current_user, catalog_list=catalog_list, image=filename, )
 
 
+# редактирование профиля
 @views.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -123,8 +136,8 @@ def edit_profile():
                 user.avatar = filename
                 db_sess.commit()
 
-            # сохраняем изменения пользователя в бд
+                # сохраняем изменения пользователя в бд
 
-            # кидаем пользователя на страницу профиля после сохранения
+                # кидаем пользователя на страницу профиля после сохранения
                 return redirect(url_for('views.user_profile'))
     return render_template('edit_profile.html', form=form, user=current_user)
