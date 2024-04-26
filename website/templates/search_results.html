@@ -1,30 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
+</br>
+</br>
 <h1>Результаты поиска</h1>
+</br>
+
 <div class="row">
     {% for product in products %}
     <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
             <img src="{{ product.images[0] }}" class="bd-placeholder-img card-img-top" width="100%"
                  height="225" role="img" aria-label="Placeholder: Thumbnail">
+
             <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Купить</button>
+                <div style="color: red;">{{product.discount}}%</div>
+                <h2 class="card-title">{{product.name}}</h2>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card__bottom">
+                    <div class="card__prices">
+                      <div class="card__price card__price--discount">{{product.price * (100 - product.discount) / 100}}</div>
+                      <div class="card__price card__price--common">{{product.price}}</div>
                     </div>
-                    <small class="text-muted">
-                        {% if product.discount %}
-                        <span class="text-decoration-line-through">{{ product.price }} ₽</span>
-                        {{ product.price - (product.price * product.discount / 100) }} ₽
-                        <span class="badge bg-danger">{{ product.discount }}%</span>
-                        {% else %}
-                        {{ product.price }} ₽
-                        {% endif %}
-                    </small>
+            </div>
+            <div class="card-footer">
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    {% if user.is_authenticated %}
+                    {% if not product.id in fav_list %}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/fav/add/{{product.id}}" class="btn">Избранное</a>
+                    </button>
+                    {%else%}
+                    <button class="btn btn-success" type="button">
+                        <a style="color: white;" href="/fav/delete/{{product.id}}" class="btn">Избранное</a>
+                    </button>
+                    {% endif %}
+                    {%if not product.id in cart_list%}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/cart/add/{{product.id}}" class="btn">В корзину</a>
+                    </button>
+                    {%else%}
+                    <h5 class="card-title">Уже в корзине</h5>
+                    {%endif%}
+                    {% else %}
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/login" class="btn">В корзину</a>
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <a style="color: white;" href="/login" class="btn">Избранное</a>
+                    </button>
+                    {% endif %}
+
                 </div>
             </div>
+
         </div>
     </div>
     {% endfor %}

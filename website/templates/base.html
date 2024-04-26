@@ -111,6 +111,38 @@
   font-size: 13px;
   color: #bfbfbf;
 }
+.one {
+  background: #ffffff;
+  padding: 40px 20px;
+  text-align: center;
+}
+.one h1 {
+  font-family: 'Righteous', cursive;
+  position: relative;
+  color: #3CA1D9;
+  display: inline-block;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  font-size: 3em;
+  padding: 11px 60px;
+  margin: 0;
+  line-height: 1;
+}
+.one h1:before, .one h1:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 100%;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  background: repeating-linear-gradient(180deg, transparent, transparent 2px, #3CA1D9 2px, #3CA1D9 4px);
+}
+.one h1:before {left: 0;}
+.one h1:after {right: 0;}
+@media (max-width: 420px) {
+  .one h1 {font-size: 2em;}
+}
 
 
 
@@ -133,7 +165,7 @@
             <a class="navbar-brand"><img
                     src='https://touchmehome.ru/catalog/view/theme/technics/images/shopping-bag.svg'
                     width="40px"></a>
-            <a class="navbar-brand" href="/">Какое-то название | Интернет-магазин</a>
+            <a class="navbar-brand" href="/">Онлайн-супермаркет | Интернет-магазин</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,11 +186,10 @@
                         </ul>
                     </li>
                     <div class="leftpos">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">
-                                <a href="/search" class="btn" style="color: green;">ИСКАТЬ</a>
-                            </button>
+                        <form action="{{ url_for('views.search') }}" method="get" class="d-flex">
+                            <input class="form-control me-2" type="search" name="query" placeholder="Поиск"
+                                   aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Искать</button>
                         </form>
                     </div>
                     {% if user.is_authenticated %}

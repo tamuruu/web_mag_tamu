@@ -9,18 +9,18 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for item in sp %}
     <div class="col">
-        <div class="card h-100">
+        <div class="card h-100" >
             {%if item[7]%}
-            <img src="{{item[6]}}" class="card-img-top" alt="{{item[6]}}">
+            <img src="{{item[6]}}" class="card-img-top" alt="{{item[6]}}" onclick="http://127.0.0.1:5000/show">
             {%else%}
-            <img src="{{item[6][0]}}" class="card-img-top" alt="{{item[6][0]}}">
+            <img src="{{item[6][0]}}" class="card-img-top" alt="{{item[6][0]}}" onclick="http://127.0.0.1:5000/show">
             {%endif%}
             <div class="card-body">
-                <div style="color: red;">{{item[3]}}%</div>
-                <h2 class="card-title">{{item[1]}}</h2>
+                 <div style="color: red;">{{item[3]}}%</div>
+                <a href="http://127.0.0.1:5000/show/{{item[0]}}"><h2 class="card-title">{{item[1]}}</h2></a>
                 <p class="card-text">{{item[5]}}</p>
             </div>
-            <div class="card__bottom">
+            <div class="card__bottom" onclick="http://127.0.0.1:5000/show">
                     <div class="card__prices">
                       <div class="card__price card__price--discount">{{(item[2] * (100 - item[3])) / 100}}</div>
                       <div class="card__price card__price--common">{{item[2]}}</div>
@@ -31,7 +31,7 @@
                 <div class="d-grid gap-2 col-6 mx-auto">
                     {% if user.is_authenticated %}
                     {% if not item[0] in fav_list %}
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" >
                         <a style="color: white;" href="/fav/add/{{item[0]}}" class="btn">Избранное</a>
                     </button>
                     {%else%}

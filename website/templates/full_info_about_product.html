@@ -1,0 +1,37 @@
+{%extends 'base.html'%}{%block title%}Страница товара{%endblock%}
+{%block content%}
+<h1><a href="/">&leftarrow;</a><span class="text-muted">{{item[1]}}</span></h1>
+</br>
+<img src="/static/products_img/{{item[0]}}/{{item[7]}}" class="card-img-top" alt="{{item[6]}}">
+</br>
+</br>
+<h5>{{item[5]}}</h5>
+</br>
+</br>
+</br>
+<div class="one"><h1>ОТЗЫВЫ О ТОВАРЕ</h1></div>
+</br>
+</br>
+</br>
+
+<form method="POST">
+    <h3>Введите отзыв   <input type="text" name="Login"></h3>
+    </br>
+    <h3>Оцените товар</h3>
+    <br> <br>5 ★<input type="radio" name="oc" value="5" checked>
+    4 ★<input type="radio" name="oc" value="4">
+    3 ★<input type="radio" name="oc" value="3">
+    2 ★<input type="radio" name="oc" value="2">
+    1 ★<input type="radio" name="oc" value="1"> <br> <br>
+    <input type="submit" value="Отправить">
+
+</form>
+{%for otz in otzivs%}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+        <h7>Покупатель оценил товар на {{otz[-2:-1]}} ★</h7>
+        <h3>{{otz[:-2]}}</h3>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}
