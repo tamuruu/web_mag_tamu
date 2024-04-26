@@ -3,6 +3,7 @@ from .db_session import SqlAlchemyBase
 from datetime import datetime
 
 
+# база данных с продуктами
 class AddProduct(SqlAlchemyBase):
     __tablename__ = 'product'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)

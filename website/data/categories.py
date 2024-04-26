@@ -3,6 +3,7 @@ from .db_session import SqlAlchemyBase, create_session
 from datetime import datetime
 
 
+# база данных с категориями в каталоге
 class Categories(SqlAlchemyBase):
     __tablename__ = 'categories'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
