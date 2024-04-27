@@ -1,11 +1,44 @@
 {%extends 'base.html'%}{%block title%}Страница товара{%endblock%}
 {%block content%}
-<h1><a href="/">&leftarrow;</a><span class="text-muted">{{item[1]}}</span></h1>
+<h1 style="color: #ffffff;"><a href="/">&leftarrow;</a><span class="text-muted">{{item[1]}}</span></h1>
 </br>
-<img src="/static/products_img/{{item[0]}}/{{item[7]}}" class="card-img-top" alt="{{item[6]}}">
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/static/products_img/{{item[0]}}/{{item[7]}}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/static/products_img/{{item[0]}}/{{item[8]}}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/static/products_img/{{item[0]}}/{{item[9]}}" class="d-block w-100" alt="...">
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<h3>Цена: {{item[2]}}</h3>
+<h3>Остаток на складе: {{item[4]}}</h3>
 </br>
 </br>
-<h5>{{item[5]}}</h5>
+<h5 style="color: #ffffff;">{{item[5]}}</h5>
 </br>
 </br>
 </br>
@@ -15,7 +48,7 @@
 </br>
 
 <form method="POST">
-    <h3>Введите отзыв   <input type="text" name="Login"></h3>
+    <h3>Введите отзыв <input type="text" name="Login"></h3>
     </br>
     <h3>Оцените товар</h3>
     <br> <br>5 ★<input type="radio" name="oc" value="5" checked>
